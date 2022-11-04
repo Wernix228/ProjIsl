@@ -6,10 +6,11 @@ public class Window {
 
     public static JFrame frame = new JFrame();
 
-    public Window(int x, int y, int w, int h){
+    public Window(int w, int h){
 
         frame.setDefaultCloseOperation(3);
-        frame.setBounds(x,y,w,h);
+        frame.setSize(w,h);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
     }
