@@ -1,17 +1,15 @@
 package main;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Window {
 
     public static JFrame frame = new JFrame();
 
-    public Window(int x, int y) {
+    public Window(int x, int y, int w, int h){
 
         frame.setDefaultCloseOperation(3);
-        frame.setSize(new Dimension(x,y));
-//        frame.setLocation(null);
+        frame.setBounds(x,y,w,h);
         frame.setVisible(true);
 
     }
