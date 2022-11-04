@@ -6,5 +6,6 @@ public class Main {
 	// write your code here
         System.out.println("Start");
         //ты лох
+        //ti toge
     }
 }
