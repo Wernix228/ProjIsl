@@ -12,6 +12,7 @@ public class Window {
         frame.setSize(w,h);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        //rrrr
 
     }
 
