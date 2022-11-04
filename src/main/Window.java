@@ -6,17 +6,14 @@ public class Window {
 
     public static JFrame frame = new JFrame();
 
-    public Window(int w, int h){
-
+    public Window() {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(w,h);
-        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-
-
+        //frame.setResizable(false);
     }
-    public void setSize(int Weight, int Height){
-        frame.setSize(Weight,Height);
+
+    public void setSize(int Weight, int Height) {
+        frame.setSize(Weight, Height);
         frame.setLocationRelativeTo(null);
     }
 
