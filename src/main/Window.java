@@ -8,12 +8,16 @@ public class Window {
 
     public Window(int w, int h){
 
-        frame.setDefaultCloseOperation(3);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(w,h);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        //rrrr
 
+
+    }
+    public void setSize(int Weight, int Height){
+        frame.setSize(Weight,Height);
+        frame.setLocationRelativeTo(null);
     }
 
 }
