@@ -22,6 +22,7 @@ public class Place extends JButton {
                     setText("O");
                     turn=1;
                 }
+                setEnabled(false);
             }
         });
     }
