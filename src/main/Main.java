@@ -1,7 +1,8 @@
 package main;
 
+import com.server.Server;
+
 import java.io.IOException;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -15,14 +16,9 @@ public class Main {
                 panel.add(place1);
             }
         }
-
         Window window = new Window();
         window.setSize(616, 639);
-        NetWork netWork = new NetWork("127.0.0.1",5050);
-        netWork.run();
-        Scanner scn = new Scanner(System.in);
-        while (true){
-            netWork.write(scn.nextLine());
-        }
+        NetWork netWork = new NetWork("127.0.0.1" , 5050);
+
     }
 }

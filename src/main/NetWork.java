@@ -1,39 +1,31 @@
 package main;
 
+import java.net.*;
 import java.io.*;
-import java.net.Socket;
 
-public class NetWork implements Runnable{
+public class NetWork {
 
-    private Socket socket;
-    private String IP;
-    private int port;
-    BufferedReader in;
-    BufferedWriter out;
-    Thread thx;
+    public NetWork(String IP,int Port){
 
-    public NetWork(String IP, int port) throws IOException {
-        this.IP = IP;
-        this.port = port;
-        Socket socket = new Socket(IP,port);
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-    }
-    public void write(String message) throws IOException {
-        out.write(message);
-        out.flush();
-    }
+        String serverName = IP;
+        int port = Port;
 
-    @Override
-    public void run() {
-        String message = null;
-        while (true){
-            try {
-                message = String.valueOf(in.readLine());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            System.out.println(message);
+        try {
+            System.out.println("Подключение к " + serverName + " на порт " + port);
+            Socket client = new Socket(serverName, port);
+
+            System.out.println("Просто подключается к " + client.getRemoteSocketAddress());
+            OutputStream outToServer = client.getOutputStream();
+            DataOutputStream out = new DataOutputStream(outToServer);
+
+            out.writeUTF("Привет из " + client.getLocalSocketAddress());
+            InputStream inFromServer = client.getInputStream();
+            DataInputStream in = new DataInputStream(inFromServer);
+
+            System.out.println("Сервер ответил " + in.readUTF());
+            client.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
