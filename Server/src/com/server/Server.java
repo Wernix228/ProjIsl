@@ -2,42 +2,12 @@ package com.server;
 
 import java.net.*;
 import java.io.*;
+import java.util.ArrayList;
 
 public class Server extends Thread {
     private ServerSocket serverSocket;
-
-    public Server(int port) throws IOException {
-        serverSocket = new ServerSocket(port);
-        serverSocket.setSoTimeout(10000);
-    }
-
-    public void run() {
-        while(true) {
-            try {
-                System.out.println("Ожидание клиента на порт " +
-                        serverSocket.getLocalPort() + "...");
-                Socket server = serverSocket.accept();
-
-                System.out.println("Просто подключается к " + server.getRemoteSocketAddress());
-                DataInputStream in = new DataInputStream(server.getInputStream());
-
-                System.out.println(in.readUTF());
-                DataOutputStream out = new DataOutputStream(server.getOutputStream());
-                out.writeUTF("Спасибо за подключение к " + server.getLocalSocketAddress()
-                        + "\nПока!");
-                server.close();
-
-            } catch (SocketTimeoutException s) {
-                System.out.println("Время сокета истекло!");
-                break;
-            } catch (IOException e) {
-                e.printStackTrace();
-                break;
-            }
-        }
-    }
-
-    public static void main(String [] args) {
+    ArrayList<String> list = new ArrayList<>();
+    public static void main(String[] args) {
         int port = 5050;
         try {
             Thread t = new Server(port);
@@ -45,5 +15,36 @@ public class Server extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Server(int port) throws IOException {
+        serverSocket = new ServerSocket(port);
+        serverSocket.setSoTimeout(10000);
+    }
+
+    public void run() {
+        while (true) {
+            if(list.size() < 2){
+                connection((serverSocket.getInetAddress().toString()));
+                try {
+                    Socket socket = serverSocket.accept();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    public synchronized void connection(String address){
+        list.add(address);
+
+    }
+    public synchronized void sendMessage(){
+
+    }
+    public synchronized void disconnect(){
+
+    }
+    public synchronized void onException(){
+
     }
 }
