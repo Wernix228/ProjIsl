@@ -6,45 +6,60 @@ import java.util.ArrayList;
 
 public class Server extends Thread {
 
-    private static ServerSocket serverSocket;
+    private final ServerSocket serverSocket = new ServerSocket(4040,10000);
     private Socket socket;
-    static int port;
-    ArrayList<String> list = new ArrayList<>();
+    BufferedReader reader;
+    Writer writer;
+    String message;
 
     public static void main(String[] args) throws IOException {
-        serverSocket = new ServerSocket(port);
-        serverSocket.setSoTimeout(10000);
+        Server server = new Server();
+        server.start();
     }
-    public Server(int port) throws IOException {
+
+    public Server() throws IOException {
         socket = serverSocket.accept();
+        reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
     }
 
     public void run() {
-        while (true) {
-
+        while (!socket.isClosed()){
+            try {
+                sendMessage();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }finally {
+                try {
+                    reader.close();
+                    writer.close();
+                    socket.close();
+                    serverSocket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
-    public synchronized void connection(String address) {
-        try {
-            Thread t = new Server(port);
-            t.start();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public synchronized void connection(String address){
+
+    }
+
+    public synchronized void sendMessage() throws IOException {
+        if(reader.ready()) {
+            message = reader.readLine();
+            writer.write(message);
+            writer.flush();
         }
-        list.add(address);
+    }
+
+    public synchronized void disconnect(){
 
     }
 
-    public synchronized void sendMessage() {
+    public synchronized void onException(){
 
     }
 
-    public synchronized void disconnect() {
-
-    }
-
-    public synchronized void onException() {
-
-    }
 }
