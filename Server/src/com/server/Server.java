@@ -11,16 +11,20 @@ public class Server extends Thread {
     BufferedReader reader;
     Writer writer;
     String message;
+    Thread thread;
 
     public static void main(String[] args) throws IOException {
         Server server = new Server();
+        server.thread.start();
         server.start();
     }
 
     public Server() throws IOException {
+        thread = new Thread(this);
         socket = serverSocket.accept();
         reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+
     }
 
     public void run() {
